@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BeeRelax — demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --radius: 16px;
+    --shadow: 0 12px 32px rgba(0,0,0,.12);
+    --bg: #fbf8f1;
+    --ink:#111;
+    --muted:#6b6b6b;
+    --brand:#000;
+    --band-top: 32px;          /* lavender band top padding (move headings up/down) */
+    --side-pad: 48px;          /* equal inset for both text blocks on the band */
+    --honey-size: 160px;       /* scale of the honeycomb pattern */
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  h1,h2,h3{margin:0 0 .5rem 0}
+  h1{font-weight:800;letter-spacing:.04em}
+  h2{font-weight:800}
+  p{margin:.5rem 0 0 0}
+  a{color:inherit}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+  .section{padding:28px 0}
+
+  /* ===== Buttons ===== */
+  .btn{background:#111;color:#fff;padding:12px 18px;border-radius:12px;font-weight:800;text-decoration:none;display:inline-block}
+  .btn:hover{filter:brightness(.95)}
+
+  /* ===== HERO ===== */
+  .hero{padding-top:20px}
+  .hero-box{position:relative;width:100%;max-width:1200px;margin:0 auto 48px;aspect-ratio:1200/886;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .hero-media{position:absolute;inset:0;z-index:0}
+  .hero-media video{width:100%;height:100%;display:block;object-fit:cover;object-position:62% 40%}
+  .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;color:#fff;padding:56px 28px;background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.0) 40%)}
+  .hero-overlay h1{font-size:clamp(36px,7vw,64px);letter-spacing:2px;margin:0 0 6px}
+  .tagline{margin:0 0 14px;font-size:18px;color:#f0f0f0}
+  .hero-line{height:1px;background:#fff;max-width:240px;margin:0 0 16px}
+ .btn-hero{
+    display:inline-block; background:#fff; color:#000; padding:14px 22px; border-radius:12px;
+    font-weight:800; letter-spacing:1px; text-decoration:none; text-transform:uppercase; box-shadow:0 2px 0 rgba(0,0,0,.06)
+  }
+  .btn-hero:hover{filter:brightness(.95)}
+
+
+ /* ---------- HOT-FIX: Two-video + text row ---------- */
+:root {
+  /* easy knobs */
+  --two-media-width: 620px;       /* width of each small video card on desktop */
+  --two-media-gap: 30px;          /* vertical gap between the two videos */
+  --two-col-gap: 32px;            /* space between videos and right column text */
+  --two-copy-top: 55px;           /* move the right text block down/up */
+  --two-top-pad: 20px;             /* optional padding above top video */
+  --two-copy-bottom: 0px;         /* optional padding below the text block */
+}
+
+
+/* the two-column wrapper */
+.grid-2{
+  display:grid;
+  grid-template-columns: minmax(0, var(--two-media-width)) 1fr;
+  column-gap: var(--two-col-gap);
+  align-items: start;
+  max-width: 1200px;            /* keep inside your page width */
+  margin: 0 auto;
+}
+
+/* stack the two videos nicely */
+.media-stack{
+ padding-top: var(--two-top-pad); 
+  display:flex;
+  flex-direction:column;
+  gap: var(--two-media-gap);
+}
+
+.media-spacer {
+  height: calc(var(--two-media-width) / 1.8);
+  visibility: hidden;
+}
+
+.text-spacer {
+  height: calc(var(--two-media-width) / 1.8);
+}
+
+
+
+/* size/shape of each small video card */
+.media-card{
+  width: var(--two-media-width);
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #eef0f5;
+}
+
+/* make media fill the card */
+.media-card > video,
+.media-card > img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit: cover;
+}
+
+/* nudge the text block down and give a little left padding */
+.product-copy {
+  margin-top: var(--two-copy-top);
+  padding-left: 24px;
+  padding-bottom: var(--two-copy-bottom); /* <-- add this line */
+}
+
+/* responsive: stack on narrow screens */
+@media (max-width: 980px){
+  .grid-2{ grid-template-columns: 1fr; }
+  .media-card{ width: 100%; }
+  .product-copy{ padding-left:0; margin-top: 16px; }
+}
+
+/* Fix underline on button */
+button.btn {
+  text-decoration: none;
+}
+
+
+/* ---------- (optional) HERO framing knob, keep your overlay/button ---------- */
+/* Only include this line if you still need to re-center the chair/face */
+.hero-media video{ object-position: 63% 40%; } /* second value = vertical framing */
+
+
+   /* ===== SLIDER ===== */
+  .compare{
+    position:relative;width:100%;max-width:1200px;margin:0 auto;
+    border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    user-select:none;touch-action:none;background:#fff;
+  }
+  .img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .top{clip-path: inset(0 calc(100% - var(--pos)) 0 0);}
+  .compare::before{
+    content:"";position:absolute;inset:0 auto 0 var(--pos);width:2px;transform:translateX(-1px);
+    background:rgba(0,0,0,.18);box-shadow:0 0 0 1px rgba(255,255,255,.6) inset;z-index:3;pointer-events:none;
+  }
+  .handle{
+    position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);
+    width:46px;height:46px;border-radius:999px;background:#fff;border:1px solid #e3e1d8;
+    box-shadow:0 4px 16px rgba(0,0,0,.10);display:grid;place-items:center;cursor:ew-resize;z-index:4;
+  }
+  .handle::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .range{position:absolute;inset:0;opacity:0;pointer-events:none}
+  .slider-note{margin-top:24px;margin-bottom:36px;} /* extra gap before 'Verdere opties' */
+
+
+
+  /* ===== SWATCHES ===== */
+.swatch-grid {
+  max-width: 1200px;
+  margin: 0 auto 64px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  justify-items: center;
+}
+
+.swatch {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  width: 100%;
+  height: 148px;
+  max-width: 380px;
+
+}
+
+.swatch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.swatch figcaption {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.swatch.top figcaption {
+  color: #fff;
+}
+
+.swatch.bottom figcaption {
+  color: #333;
+  text-shadow: none;
+}
+
+.swatch--half-black::before {
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.swatch--solid-black::before {
+  background: #111;
+}
+
+.swatch--honey-black::before {
+  background: #000 url("smallblack.png") center / var(--honey-size) var(--honey-size) repeat;
+  opacity: 0.95;
+}
+
+.swatch--half-white::before {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.swatch--solid-white::before {
+  background: #fff;
+}
+
+.swatch--honey-white::before {
+  background: #fff url("smallwhite.png") center / var(--honey-size) var(--honey-size) repeat;
+  opacity: 0.95;
+}
+
+
+
+  /* ===== Lavender band (Waarom / Kenmerken) ===== */
+
+.band-card {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 64px;
+  height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: url("lavenderBG2.jpg") center / cover no-repeat;
+}
+
+.band-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 0) 70%);
+}
+
+.band-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 32px;
+  color: #fff;
+  grid-template-columns: 1fr 1fr;
+  padding: 60px 190px 32px; /* SHIFTED right from 48px to 64px */
+  height: 100%;
+  align-items: start;
+}
+
+.band h2,
+.band .kv-list li,
+.band .kv-list li b {
+  color: #fff;
+}
+
+
+  /* spacing helpers */
+  .space-top{margin-top:28px}
+
+.info-tiles {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.tile {
+  flex: 1;
+background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradient */
+  color: #000; /* black text */
+  border-radius: var(--radius);
+  padding: 24px 24px 24px 48px; /* more left margin inside */
+  box-shadow: var(--shadow);
+}
+
+.tile h2 {
+  margin-top: 0;
+  font-weight: 800;
+}
+
+.tile ul {
+  padding-left: 20px;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero wrap">
+    <div class="hero-box">
+      <div class="hero-media">
+        <video autoplay playsinline muted loop poster="relax.jpg">
+          <source src="loopripplewebdemo26aug.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-overlay">
+        <h1>BEERELAX</h1>
+        <p class="tagline">Ontspan. Herstel. ReVibe.</p>
+        <div class="hero-line"></div>
+        <a href="#contact" class="btn btn-hero">MEER INFO</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- RESULT + two stacked videos; copy beside LOWER video -->
+   <!-- ===== RESULTAAT IN 20 MIN (START) ===== -->
+<section style="margin-top: 64px">
+  <h2>Resultaat in 20 minuten</h2>
+  <p>Totale ontspanning · Mentaal & fysiek herstel · Nieuwe energie voor de rest van de dag.</p>
+
+  <div class="grid-2">
+    <div class="media-stack">
+      <div class="media-card">
+        <video autoplay muted loop playsinline>
+          <source src="rubbingtemples.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="media-card">
+        <video autoplay muted loop playsinline>
+          <source src="blackgrow25aug.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <div class="product-copy">
+      <div class="text-spacer"></div>
+
+      <h3>De BeeRelax Room</h3>
+      <p>Compacte, volledig uitgeruste herstelruimte — ontworpen voor rust, privacy en nieuwe focus.</p>
+      <ul>
+        <li><strong>Premium massagestoel</strong> — full-body, warmte, automatische herkenning</li>
+        <li><strong>Lichtprogramma (4 fasen)</strong> — ontspanning, stressrelease, focus, energie</li>
+        <li><strong>Subtiele geurbeleving</strong> — BeeRelax Bloom</li>
+        <li><strong>Plug-and-play</strong> — vrijstaand, geen verbouwing nodig</li>
+      </ul>
+      <a href="#" class="btn">Meer info</a>
+    </div>
+  </div>
+</section>
+<br/>
+<br/>
+<br/>
+
+  <!-- SLIDER -->
+  <section class="section">
+    <h2>Sluit je af, laad jezelf op</h2>
+
+    <div class="compare" id="compare" style="--pos:75%">
+      <img class="img bottom" id="imgBottom" src="creme.jpg" alt="BeeRelax — crème">
+      <img class="img top"    id="imgTop"    src="black.jpg"  alt="BeeRelax — zwart">
+      <div class="handle" id="handle" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-label="Vergelijkingspositie"></div>
+      <input class="range" id="range" type="range" min="0" max="100" value="75" aria-hidden="true">
+    </div>
+<p class="slider-note">Schuif om 2 versies van de BeeRelax Room te vergelijken.</p>
+
+  </section>
+
+<section class="section">
+
+      <h3 class="options-title">Verdere opties</h3>
+
+      <!-- SWATCHES -->
+      <div class="swatch-grid">
+        <!-- Top row (white labels) -->
+        <figure class="swatch top swatch--half-black">
+          <figcaption>Half-transparant zwart</figcaption>
+        </figure>
+
+        <figure class="swatch top swatch--solid-black">
+          <figcaption>Dekkend zwart</figcaption>
+        </figure>
+
+        <figure class="swatch top swatch--honey-black">
+          <figcaption>Honingraat zwart</figcaption>
+        </figure>
+
+        <!-- Bottom row (dark labels) -->
+        <figure class="swatch bottom swatch--half-white">
+          <figcaption>Half-transparant wit</figcaption>
+        </figure>
+
+        <figure class="swatch bottom swatch--solid-white">
+          <figcaption>Dekkend wit</figcaption>
+        </figure>
+
+        <figure class="swatch bottom swatch--honey-white">
+          <figcaption>Honingraat wit</figcaption>
+        </figure>
+      </div>
+    </section>
+ </main>
+
+
+<section class="info-tiles wrap">
+  <div class="tile">
+    <h2>Waarom BeeRelax?</h2>
+    <ul>
+      <li>Voorkomt ziekteverzuim & burn-out</li>
+      <li>Bevordert productiviteit & herstel</li>
+      <li>Plug & play — géén personeel nodig</li>
+      <li>Premium uitstraling in elke ruimte</li>
+    </ul>
+  </div>
+  <div class="tile">
+    <h2>Kenmerken</h2>
+    <ul>
+      <li>Geluidsreductie tot 30 dB (plaatsingsafhankelijk)</li>
+      <li>Visueel rustgevend & privacygericht ontwerp</li>
+      <li>Geventileerd, veilig & ruim</li>
+      <li>Compact & vrijstaand — geen verbouwing</li>
+    </ul>
+  </div>
+</section>
+
+
+
+  <!-- LAVENDER BAND (Waarom / Kenmerken) -->
+  <section class="band">
+ <div class="wrap">
+    <div class="band-card">
+        </div>
+    </div>
+  </section>
+
+<!-- CONTACT SECTION (white placeholder slab) -->
+<section id="contact" class="band" style="background:none;">
+ <div class="wrap">
+  <div class="band-card" style="background:#fff;">
+    <div class="band-inner" style="color:#000;">
+      <div class="band-left">
+        <h2 style="color:#000;">Contact</h2>
+        <p style="color:#000;">Formulier komt hier (routering naar e-mail later).</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+ 
+
+<script>
+(function(){
+  // Slider aspect ratio from image
+  const cmp  = document.getElementById('compare');
+  const baseImg = document.getElementById('imgBottom');
+  function setAspectFromImage() {
+    if (baseImg.naturalWidth && baseImg.naturalHeight) {
+      cmp.style.aspectRatio = baseImg.naturalWidth + " / " + baseImg.naturalHeight; // e.g., 1200 / 886
+    }
+  }
+  if (baseImg.complete) setAspectFromImage();
+  else baseImg.addEventListener('load', setAspectFromImage);
+
+  // Slider interaction
+  const handle = document.getElementById('handle');
+  const range  = document.getElementById('range');
+  function setPos(p){ p=Math.max(0,Math.min(100,p)); cmp.style.setProperty('--pos', p+'%'); handle.setAttribute('aria-valuenow', p.toFixed(0)); range.value=p; }
+  function posFromEvent(e){
+    const r=cmp.getBoundingClientRect();
+    const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    return (x/r.width)*100;
+  }
+  let dragging=false;
+  function start(e){ dragging=true; setPos(posFromEvent(e)); }
+  function move(e){ if(!dragging) return; setPos(posFromEvent(e)); }
+  function end(){ dragging=false; }
+  cmp.addEventListener('mousedown', start);
+  cmp.addEventListener('touchstart', start, {passive:true});
+  window.addEventListener('mousemove', move);
+  window.addEventListener('touchmove', move, {passive:true});
+  window.addEventListener('mouseup', end);
+  window.addEventListener('touchend', end);
+  handle.addEventListener('keydown', (e)=>{
+    const step=e.shiftKey?10:2;
+    if(e.key==='ArrowLeft')  setPos(parseFloat(range.value)-step);
+    if(e.key==='ArrowRight') setPos(parseFloat(range.value)+step);
+  });
+
+  // Hero underline width = heading width
+  const title = document.getElementById('heroTitle');
+  const line  = document.getElementById('heroLine');
+  function syncLine(){ line.style.width = title.getBoundingClientRect().width + 'px'; }
+  window.addEventListener('load', syncLine);
+  window.addEventListener('resize', syncLine);
+})();
+</script>
+</body>
+ <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
+</html>
