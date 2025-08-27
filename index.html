@@ -504,8 +504,23 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
   window.addEventListener('load', syncLine);
   window.addEventListener('resize', syncLine);
 })();
+
+  // to force Edge to check if video is muted to prevent the block of autoplay
+  document.addEventListener("DOMContentLoaded", function () {
+    const videos = document.querySelectorAll("video[autoplay]");
+    videos.forEach(video => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.warn("Autoplay blocked:", error);
+          // Optional: show "click to play" fallback
+        });
+      }
+    });
+  });
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
