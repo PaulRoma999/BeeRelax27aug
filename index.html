@@ -15,7 +15,7 @@
     --brand:#000;
     --band-top: 32px;          /* lavender band top padding (move headings up/down) */
     --side-pad: 48px;          /* equal inset for both text blocks on the band */
-    --honey-size: 160px;       /* scale of the honeycomb pattern */
+    --honey-size: 220px;       /* scale of the honeycomb pattern */
   }
 
   *{box-sizing:border-box}
@@ -159,25 +159,25 @@ button.btn {
 
   /* ===== SWATCHES ===== */
 .swatch-grid {
-  max-width: 1200px;
-  margin: 0 auto 64px;
+  max-width: 600px;
+  margin: 0 0 30px; /* ← removes horizontal centering */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  justify-items: center;
+  gap: 10px;
 }
+
+
 
 .swatch {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   width: 100%;
-  height: 148px;
-  max-width: 380px;
-
+  max-width: 140px;
+  height: 140px;
+  border: 1px solid rgba(0,0,0,0.08); /* ← ADD THIS LINE */
 }
-
 .swatch::before {
   content: "";
   position: absolute;
@@ -191,6 +191,8 @@ button.btn {
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
+
+
 
 .swatch.top figcaption {
   color: #fff;
@@ -210,7 +212,7 @@ button.btn {
 }
 
 .swatch--honey-black::before {
-  background: #000 url("smallblack.png") center / var(--honey-size) var(--honey-size) repeat;
+  background: var(--bg) url("smallblack300.png") center / var(--honey-size) var(--honey-size) repeat;
   opacity: 0.95;
 }
 
@@ -223,7 +225,7 @@ button.btn {
 }
 
 .swatch--honey-white::before {
-  background: #fff url("smallwhite.png") center / var(--honey-size) var(--honey-size) repeat;
+  background: var(--bg) url("smallwhite300.png") center / var(--honey-size) var(--honey-size) repeat;
   opacity: 0.95;
 }
 
@@ -297,6 +299,107 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
   padding-left: 20px;
 }
 
+  /* small room clip and text right */
+.room-highlight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 20px;
+}
+
+.room-video {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.room-text {
+  flex: 1 1 300px;
+  max-width: 500px;
+}
+
+.room-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.room-text ul {
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #000;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.feature-row video {
+  flex: 0 0 50%;
+  max-width: 600px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+.button:hover {
+  background-color: #333;
+}
+
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+}
+
+#contact-form label {
+  font-weight: bold;
+  color: #222;
+}
+
+#contact-form button:hover {
+  background: #222;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.button-submit:hover {
+  background: #333;
+}
+
+footer {
+  text-align: center;
+}
+
+
 </style>
 </head>
 <body>
@@ -305,10 +408,11 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
   <header class="hero wrap">
     <div class="hero-box">
       <div class="hero-media">
-             <video autoplay muted loop playsinline width="100%" height="auto">
+       <video autoplay muted loop playsinline width="100%" height="auto">
   <source src="loopripplewebdemo26aug.mp4" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
+
       </div>
       <div class="hero-overlay">
         <h1>BEERELAX</h1>
@@ -321,48 +425,13 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
 
   <main class="wrap">
 
-    <!-- RESULT + two stacked videos; copy beside LOWER video -->
-   <!-- ===== RESULTAAT IN 20 MIN (START) ===== -->
-<section style="margin-top: 64px">
-  <h2>Resultaat in 20 minuten</h2>
-  <p>Totale ontspanning · Mentaal & fysiek herstel · Nieuwe energie voor de rest van de dag.</p>
-
-  <div class="grid-2">
-    <div class="media-stack">
-      <div class="media-card">
-        <video autoplay muted loop playsinline>
-          <source src="rubbingtemples.mp4" type="video/mp4">
-        </video>
-      </div>
-
-      <div class="media-card">
-        <video autoplay muted loop playsinline>
-          <source src="blackgrow25aug.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-
-    <div class="product-copy">
-      <div class="text-spacer"></div>
-
-      <h3>De BeeRelax Room</h3>
-      <p>Compacte, volledig uitgeruste herstelruimte — ontworpen voor rust, privacy en nieuwe focus.</p>
-      <ul>
-        <li><strong>Premium massagestoel</strong> — full-body, warmte, automatische herkenning</li>
-        <li><strong>Lichtprogramma (4 fasen)</strong> — ontspanning, stressrelease, focus, energie</li>
-        <li><strong>Subtiele geurbeleving</strong> — BeeRelax Bloom</li>
-        <li><strong>Plug-and-play</strong> — vrijstaand, geen verbouwing nodig</li>
-      </ul>
-      <a href="#" class="btn">Meer info</a>
-    </div>
-  </div>
-</section>
-<br/>
-<br/>
-<br/>
-
-  <!-- SLIDER -->
+<!-- SLIDER -->
   <section class="section">
+
+<h2>Resultaat in 20 minuten</h2>
+  <p>Totale ontspanning · Mentaal & fysiek herstel · Nieuwe energie voor de rest van de dag.</p>
+<br/>
+<br/>
     <h2>Sluit je af, laad jezelf op</h2>
 
     <div class="compare" id="compare" style="--pos:75%">
@@ -372,8 +441,35 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
       <input class="range" id="range" type="range" min="0" max="100" value="75" aria-hidden="true">
     </div>
 <p class="slider-note">Schuif om 2 versies van de BeeRelax Room te vergelijken.</p>
-
   </section>
+
+
+
+<!-- === BEERELAX ROOM CLIP AND TEXT === -->
+<section class="section" style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
+  <div style="flex: 1; min-width: 320px;">
+    <video autoplay muted loop playsinline style="width: 100%; max-width: 620px; border-radius: 14px; box-shadow: 0 6px 16px rgba(0,0,0,0.1);">
+
+      <source src="blackgrow25aug.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div style="flex: 1; min-width: 320px;">
+    <h3>De BeeRelax Room</h3>
+    <p>Compacte, volledig uitgeruste herstelruimte — ontworpen voor rust, privacy en nieuwe focus.</p>
+    <ul>
+      <li><strong>Premium massagestoel</strong> — full-body, warmte, automatische herkenning</li>
+      <li><strong>Lichtprogramma (4 fasen)</strong> — ontspanning, stressrelease, focus, energie</li>
+      <li><strong>Subtiele geurbeleving</strong> — BeeRelax Bloom</li>
+      <li><strong>Plug-and-play</strong> — vrijstaand, geen verbouwing nodig</li>
+    </ul>
+<br/>
+    <a href="#contact" class="button">Meer info</a>
+  </div>
+</section>
+
+
+<br/>
 
 <section class="section">
 
@@ -443,19 +539,50 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
   </section>
 
 <!-- CONTACT SECTION (white placeholder slab) -->
-<section id="contact" class="band" style="background:none;">
- <div class="wrap">
-  <div class="band-card" style="background:#fff;">
-    <div class="band-inner" style="color:#000;">
-      <div class="band-left">
-        <h2 style="color:#000;">Contact</h2>
-        <p style="color:#000;">Formulier komt hier (routering naar e-mail later).</p>
-      </div>
-    </div>
-  </div>
-  </div>
+<section class="wrap">
+
+<div id="contact">
+<form action="https://formspree.io/f/mqadevyr" method="POST" id="contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
+  <label>Naam:<br><input type="text" name="name" required></label>
+  <label>E-mail:<br><input type="email" name="email" required></label>
+  <label>Bericht:<br><textarea name="message" rows="5" required></textarea></label>
+  <button type="submit" style="background: black;font-size: 16px; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px;"><strong>Verstuur<strong/></button>
+  <p id="form-response" style="margin-top: 1rem;"></p>
+</form>
+<div/>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const response = document.getElementById('form-response');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = form.getAttribute('action');
+
+    const res = await fetch(action, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (res.ok) {
+      response.innerHTML = "✅ Bericht verzonden. Bedankt!";
+      form.reset();
+    } else {
+      response.innerHTML = "❌ Er ging iets mis. Probeer het opnieuw.";
+    }
+  });
+</script>
+
 </section>
 
+<section class="section">
+<p><p/>
+<br/>
+</section>
 
  
 
@@ -504,23 +631,7 @@ background: linear-gradient(to bottom, #d4efff, #ffffff);/* blue to white gradie
   window.addEventListener('load', syncLine);
   window.addEventListener('resize', syncLine);
 })();
-
-  // to force Edge to check if video is muted to prevent the block of autoplay
-  document.addEventListener("DOMContentLoaded", function () {
-    const videos = document.querySelectorAll("video[autoplay]");
-    videos.forEach(video => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.warn("Autoplay blocked:", error);
-          // Optional: show "click to play" fallback
-        });
-      }
-    });
-  });
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
-
-
