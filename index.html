@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>BeeRelax — demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style>
   :root{
     --radius: 16px;
@@ -540,37 +541,47 @@ footer {
 
 <!-- CONTACT SECTION (white placeholder slab) -->
 <section class="wrap">
-
 <div id="contact">
 <form action="https://formspree.io/f/mqadevyr" method="POST" id="contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
   <label>Naam:<br><input type="text" name="name" required></label>
   <label>E-mail:<br><input type="email" name="email" required></label>
   <label>Bericht:<br><textarea name="message" rows="5" required></textarea></label>
-  <button type="submit" style="background: black;font-size: 16px; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px;"><strong>Verstuur<strong/></button>
+
+  <!-- ⬇️ INSERT THIS BELOW -->
+  <div class="g-recaptcha" data-sitekey="6LdicrgrAAAAALc4i9sA8j7iyabunMV78_1Y-x02"></div>
+
+  <button type="submit" style="background: black; font-size: 16px; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px;"><strong>Verstuur</strong></button>
   <p id="form-response" style="margin-top: 1rem;"></p>
 </form>
 <div/>
 
+<!-- ✅ Modify JS: include reCAPTCHA validation -->
 <script>
   const form = document.getElementById('contact-form');
   const response = document.getElementById('form-response');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      response.innerHTML = "⚠️ Bevestig dat je geen robot bent.";
+      return;
+    }
+
     const data = new FormData(form);
     const action = form.getAttribute('action');
 
     const res = await fetch(action, {
       method: 'POST',
       body: data,
-      headers: {
-        'Accept': 'application/json'
-      }
+      headers: { 'Accept': 'application/json' }
     });
 
     if (res.ok) {
       response.innerHTML = "✅ Bericht verzonden. Bedankt!";
       form.reset();
+      grecaptcha.reset(); // clear reCAPTCHA
     } else {
       response.innerHTML = "❌ Er ging iets mis. Probeer het opnieuw.";
     }
@@ -579,12 +590,12 @@ footer {
 
 </section>
 
+
 <section class="section">
 <p><p/>
 <br/>
 </section>
 
- 
 
 <script>
 (function(){
