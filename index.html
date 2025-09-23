@@ -44,6 +44,13 @@
   .hero{padding-top:20px}
   .hero-box{position:relative;width:100%;max-width:1200px;margin:0 auto 48px;aspect-ratio:1200/673;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
   .hero-media{position:absolute;inset:0;z-index:0}
+.hero-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.01); /* slight zoom to remove 1px edge artifacts */
+}
   .hero-media video{width:100%;height:100%;display:block;object-fit:cover;object-position:62% 40%}
   .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;color:#fff;padding:56px 28px;background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.0) 40%)}
   .hero-overlay h1{font-size:clamp(36px,7vw,64px);letter-spacing:2px;margin:0 0 6px}
@@ -658,6 +665,7 @@ footer {
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
