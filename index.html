@@ -737,27 +737,38 @@ footer {
 
 function onYouTubeIframeAPIReady() {}
   
-let isMuted = true;
-const iframe = document.getElementById("beeRelaxVideo");
-const toggle = document.querySelector(".sound-toggle");
+ let player;
+  let isMuted = true;
 
-function toggleMute() {
-  const command = isMuted ? 'unMute' : 'mute';
-  iframe.contentWindow.postMessage(JSON.stringify({
-    event: "command",
-    func: command,
-    args: []
-  }), "*");
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('beeRelaxVideo', {
+      events: {
+        onReady: (event) => {
+          event.target.mute();
+          event.target.playVideo();
+        }
+      }
+    });
+  }
 
-  isMuted = !isMuted;
-  toggle.textContent = isMuted ? "🔇 Sound off" : "🔊 Sound on";
-}
+  function toggleMute() {
+    if (!player) return;
+    if (isMuted) {
+      player.unMute();
+      document.querySelector('.sound-toggle').textContent = '🔊 Sound on';
+    } else {
+      player.mute();
+      document.querySelector('.sound-toggle').textContent = '🔇 Sound off';
+    }
+    isMuted = !isMuted;
+  }
 
 
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
