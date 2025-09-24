@@ -53,6 +53,7 @@
   box-shadow: var(--shadow);
   border-radius: var(--radius-xl);
   overflow: hidden;
+  clip-path: inset(0 round var(--radius-xl)); /* 🔥 THIS forces clipping even on iframe */
   aspect-ratio: 16 / 9;
   position: relative;
 }
@@ -90,15 +91,20 @@
    transform: translateZ(0);
 }
 
-  .sound-toggle {
-  font-size: 14px;
-  color: #333;
-  text-align: right;
-  margin-top: 6px;
-  margin-right: 4px;
+.sound-toggle {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
   cursor: pointer;
+  z-index: 2;
   user-select: none;
 }
+
 .sound-toggle:hover {
   text-decoration: underline;
 }
@@ -502,18 +508,19 @@ footer {
 <div class="hero-box">
   <div class="hero-media">
     <iframe
-  id="beeRelaxVideo"
-  class="hero-iframe"
-  src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=eyrveThxRI8&disablekb=1&fs=0&showinfo=0"
-  title="BeeRelax teaser"
-  frameborder="0"
-  allow="autoplay; encrypted-media"
-  allowfullscreen
-></iframe>
+      id="beeRelaxVideo"
+      class="hero-iframe"
+      src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&enablejsapi=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=eyrveThxRI8&disablekb=1&fs=0&showinfo=0"
+      title="BeeRelax teaser"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
   </div>
+  <div class="sound-toggle">🔇 Sound off</div>
+</div>
 
-  <!-- Toggle Sound -->
-<div class="sound-toggle" style="text-align: right; padding-top: 0.5rem; cursor: pointer;">🔇 Sound off</div>
+
 
 
 
@@ -724,9 +731,12 @@ footer {
 })();
 
 
-  let isMuted = true;
+let isMuted = true;
   const iframe = document.getElementById("beeRelaxVideo");
   const toggle = document.querySelector(".sound-toggle");
+
+  // Optional, but required for YouTube API to fully load in some setups
+  function onYouTubeIframeAPIReady() {}
 
   function toggleMute() {
     const command = isMuted ? 'unMute' : 'mute';
@@ -742,14 +752,19 @@ footer {
     toggle.textContent = isMuted ? "🔇 Sound off" : "🔊 Sound on";
   }
 
-  // Needed to let the YouTube iframe API receive postMessage
-  function onYouTubeIframeAPIReady() {}
+  // Attach click handler once DOM is ready
+  document.addEventListener("DOMContentLoaded", function () {
+    if (toggle) {
+      toggle.addEventListener("click", toggleMute);
+    }
+  });
 
 
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
