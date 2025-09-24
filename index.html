@@ -93,16 +93,14 @@
 }
 
 .sound-toggle {
-  font-size: 14px;
-  color: #333;
-  text-align: right;
-  margin-top: 8px;
-  margin-right: 4px;
-  cursor: pointer;
-  user-select: none;
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
+  position: relative;
+  z-index: 9999;
+  display: block !important;
+  background: yellow; /* TEMP debug */
+  color: black;
+  padding: 8px;
 }
+
 
 .sound-toggle:hover {
   color: #f5a623; /* honey color */
@@ -508,15 +506,15 @@ footer {
 <!-- video embed -->
 <div class="hero-box">
   <div class="hero-media">
-    <iframe
-      id="beeRelaxVideo"
-      class="hero-iframe"
-      src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&enablejsapi=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=eyrveThxRI8&disablekb=1&fs=0&showinfo=0"
-      title="BeeRelax teaser"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-    ></iframe>
+   <iframe
+  id="beeRelaxVideo"
+  class="hero-iframe"
+  src="https://www.youtube.com/embed/eyrveThxRI8?enablejsapi=1&modestbranding=1&rel=0&controls=0&showinfo=0&mute=1"
+  title="BeeRelax teaser"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+></iframe>
   </div>
   <div class="sound-toggle">🔇 Sound off</div>
 </div>
@@ -732,32 +730,34 @@ footer {
 })();
 
 
-let isMuted = true;
-  const iframe = document.getElementById("beeRelaxVideo");
-  const toggle = document.querySelector(".sound-toggle");
+let player;
+  let isMuted = true;
 
-  // Optional, but required for YouTube API to fully load in some setups
-  function onYouTubeIframeAPIReady() {}
-
-  function toggleMute() {
-    const command = isMuted ? 'unMute' : 'mute';
-    iframe.contentWindow.postMessage(
-      JSON.stringify({
-        event: "command",
-        func: command,
-        args: []
-      }),
-      "*"
-    );
-    isMuted = !isMuted;
-    toggle.textContent = isMuted ? "🔇 Sound off" : "🔊 Sound on";
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player("beeRelaxVideo", {
+      events: {
+        onReady: function (event) {
+          event.target.mute();
+          event.target.playVideo();
+        },
+      },
+    });
   }
 
-  // Attach click handler once DOM is ready
-  document.addEventListener("DOMContentLoaded", function () {
-    if (toggle) {
-      toggle.addEventListener("click", toggleMute);
-    }
+  const toggle = document.querySelector(".sound-toggle");
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      if (!player) return;
+      if (isMuted) {
+        player.unMute();
+        toggle.textContent = "🔊 Sound on";
+      } else {
+        player.mute();
+        toggle.textContent = "🔇 Sound off";
+      }
+      isMuted = !isMuted;
+    });
+  }
   });
 
 
@@ -765,6 +765,7 @@ let isMuted = true;
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
