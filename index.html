@@ -42,7 +42,15 @@
 
   /* ===== HERO ===== */
   .hero{padding-top:20px}
-  .hero-box{position:relative;width:100%;max-width:1200px;margin:0 auto 48px;aspect-ratio:1200/673;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+ .hero-box {
+  background: var(--offwhite);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  position: relative;
+}
+
   .hero-media{position:absolute;inset:0;z-index:0}
 .hero-media video {
   width: 100%;
@@ -52,7 +60,7 @@
   transform: scale(1.1); /* slight zoom to remove 1px edge artifacts */
 }
   .hero-media video{width:100%;height:100%;display:block;object-fit:cover;object-position:62% 40%}
-  .hero-iframe {
+.hero-iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -60,8 +68,8 @@
   height: 100%;
   border: 0;
   object-fit: cover;
-  aspect-ratio: 1200/886;
 }
+
 
   .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;color:#fff;padding:56px 28px;background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.0) 40%)}
   .hero-overlay h1{font-size:clamp(36px,7vw,64px);letter-spacing:2px;margin:0 0 6px}
@@ -458,9 +466,9 @@ footer {
   <div class="hero-box">
 <div class="hero-media">
   <div class="video-wrapper">
-    <iframe
+   <iframe
   class="hero-iframe"
-  src="https://www.youtube.com/embed/eyrveThxRI8?si=jRjMDKN0Uh-ESQj5&autoplay=1&mute=1&controls=0&loop=1&playlist=eyrveThxRI8"
+  src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=eyrveThxRI8"
   title="BeeRelax teaser"
   frameborder="0"
   allow="autoplay; encrypted-media; picture-in-picture"
@@ -678,6 +686,7 @@ footer {
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
