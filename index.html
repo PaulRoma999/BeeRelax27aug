@@ -63,6 +63,9 @@
   z-index: 0;
   border-radius: inherit;
   overflow: hidden;
+    /* 🩹 Fix for iFrame radius not clipping in Safari/Chrome */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 .hero-media video {
@@ -82,7 +85,6 @@
   height: 100%;
   border: 0;
   object-fit: cover;
-  border-radius: inherit;
   pointer-events: none; /* ⛔ disables hover overlays like title/avatar */
   display: block;
 }
@@ -747,6 +749,7 @@ footer {
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
