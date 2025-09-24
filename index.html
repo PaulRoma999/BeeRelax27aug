@@ -513,14 +513,14 @@ footer {
 <!-- video embed -->
 <div class="hero-box">
   <div class="hero-media">
- <iframe
+<iframe
   id="beeRelaxVideo"
   width="100%"
   height="100%"
-  src="https://www.youtube.com/embed/eyrveThxRI8?si=jRjMDKN0Uh-ESQj5&autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0"
+  src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&showinfo=0"
   title="BeeRelax"
   frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   referrerpolicy="strict-origin-when-cross-origin"
   allowfullscreen
 ></iframe>
@@ -740,35 +740,32 @@ function onYouTubeIframeAPIReady() {}
   
  let player;
   let isMuted = true;
+  const toggle = document.querySelector(".sound-toggle");
 
   function onYouTubeIframeAPIReady() {
-    player = new YT.Player('beeRelaxVideo', {
+    window.player = new YT.Player("beeRelaxVideo", {
       events: {
-        onReady: (event) => {
-          event.target.mute();
-          event.target.playVideo();
+        onReady: () => {
+          toggle.addEventListener("click", () => {
+            if (isMuted) {
+              player.unMute();
+              toggle.textContent = "🔊 Sound on";
+            } else {
+              player.mute();
+              toggle.textContent = "🔇 Sound off";
+            }
+            isMuted = !isMuted;
+          });
         }
       }
     });
   }
 
-  function toggleMute() {
-    if (!player) return;
-    if (isMuted) {
-      player.unMute();
-      document.querySelector('.sound-toggle').textContent = '🔊 Sound on';
-    } else {
-      player.mute();
-      document.querySelector('.sound-toggle').textContent = '🔇 Sound off';
-    }
-    isMuted = !isMuted;
-  }
-
-
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
