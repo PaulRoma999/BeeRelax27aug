@@ -49,13 +49,13 @@
 }
 
 .hero-box {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
   background: var(--offwhite);
   box-shadow: var(--shadow);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
   clip-path: inset(0 round var(--radius-xl)); /* 🔥 THIS forces clipping even on iframe */
   aspect-ratio: 16 / 9;
-  position: relative;
 }
 
 .hero-media {
@@ -88,26 +88,27 @@
   object-fit: cover;
   pointer-events: none; /* ⛔ disables hover overlays like title/avatar */
   display: block;
-   transform: translateZ(0);
+  transform: translateZ(0);
+  border-radius: 16px;
 }
 
 .sound-toggle {
-  position: absolute;
-  bottom: 12px;
-  right: 16px;
-  font-size: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  text-align: right;
+  margin-top: 8px;
+  margin-right: 4px;
   cursor: pointer;
-  z-index: 2;
   user-select: none;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
 .sound-toggle:hover {
-  text-decoration: underline;
+  color: #f5a623; /* honey color */
+  text-decoration: none;
 }
+
 
 
 
@@ -764,6 +765,7 @@ let isMuted = true;
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
