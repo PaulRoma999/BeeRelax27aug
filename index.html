@@ -93,25 +93,22 @@
 }
 
 .sound-toggle {
-  font-size: 14px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 6px 10px;
-  border-radius: 8px;
   position: absolute;
   bottom: 10px;
   right: 10px;
   z-index: 10;
-  user-select: none;
+  background: rgba(30, 30, 30, 0.7);
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+}
+.sound-toggle:hover {
+  background: rgba(50, 50, 50, 0.9);
 }
 
-.sound-toggle:hover {
-  background: #ffc000; /* Honey bright */
-  color: #000;
-  text-decoration: none;
-}
 
 
 
@@ -513,24 +510,29 @@ footer {
 <!-- video embed -->
 <div class="hero-box">
 <div class="hero-media" style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden;">
-  <iframe
-    id="beeRelaxVideo"
-    src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&loop=1&playlist=eyrveThxRI8&controls=0&modestbranding=1&rel=0&showinfo=0&enablejsapi=1"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-  ></iframe>
-</div>
+<iframe
+  id="beeRelaxVideo"
+  src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&loop=1&playlist=eyrveThxRI8&controls=0&modestbranding=1&rel=0&showinfo=0&enablejsapi=1"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+></iframe>
 
 </div>
 
+</div>
 
+
+<!-- sound button + text under the video -->
+<div class="wrap" style="padding: 8px 0; display: flex; justify-content: flex-end;">
+  <button id="soundToggle" class="sound-toggle">🔇 Sound off</button>
+</div>
 
 
   <!-- text + button UNDER the video -->
   <div class="wrap" style="padding:8px 0;">
-    <button class="sound-toggle" onclick="toggleMute()">🔇 Sound off</button>
+   
     <h1>BeeRelax</h1>
     <p><strong>Totale ontspanning, herstel en revitalisatie in een innovatief wellnessconcept.</strong></p>
     <br>
@@ -734,35 +736,57 @@ footer {
   window.addEventListener('resize', syncLine);
 })();
 
-function onYouTubeIframeAPIReady() {}
-  
- let player;
+  let player;
   let isMuted = true;
-  const toggle = document.querySelector(".sound-toggle");
 
   function onYouTubeIframeAPIReady() {
-    window.player = new YT.Player("beeRelaxVideo", {
+    player = new YT.Player('beeRelaxVideo', {
       events: {
-        onReady: () => {
-          toggle.addEventListener("click", () => {
-            if (isMuted) {
-              player.unMute();
-              toggle.textContent = "🔊 Sound on";
-            } else {
-              player.mute();
-              toggle.textContent = "🔇 Sound off";
-            }
-            isMuted = !isMuted;
-          });
+        onReady: (event) => {
+          player.mute();
+          preventPause();
+        },
+        onStateChange: (event) => {
+          if (event.data === YT.PlayerState.PAUSED) {
+            player.playVideo(); // block pause
+          }
         }
       }
     });
   }
 
+  document.getElementById('soundToggle').addEventListener('click', () => {
+    if (!player) return;
+
+    if (isMuted) {
+      player.unMute();
+      document.getElementById('soundToggle').textContent = '🔊 Sound on';
+    } else {
+      player.mute();
+      document.getElementById('soundToggle').textContent = '🔇 Sound off';
+    }
+
+    isMuted = !isMuted;
+  });
+
+  function preventPause() {
+    setInterval(() => {
+      if (player && player.getPlayerState() === YT.PlayerState.PAUSED) {
+        player.playVideo();
+      }
+    }, 500);
+  }
+
+  // Load YouTube iframe API if not already loaded
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+
 </script>
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
