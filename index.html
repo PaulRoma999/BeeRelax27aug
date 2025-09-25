@@ -512,20 +512,17 @@ footer {
   <!-- video embed -->
 <!-- video embed -->
 <div class="hero-box">
-  <div class="hero-media">
-<iframe
-  id="beeRelaxVideo"
-  width="100%"
-  height="100%"
-  src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&showinfo=0"
-  title="BeeRelax"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen
-></iframe>
-  <button class="sound-toggle" onclick="toggleMute()">🔇 Sound off</button>
+<div class="hero-media" style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden;">
+  <iframe
+    id="beeRelaxVideo"
+    src="https://www.youtube.com/embed/eyrveThxRI8?autoplay=1&mute=1&loop=1&playlist=eyrveThxRI8&controls=0&modestbranding=1&rel=0&showinfo=0&enablejsapi=1"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+  ></iframe>
 </div>
+
 </div>
 
 
@@ -533,6 +530,7 @@ footer {
 
   <!-- text + button UNDER the video -->
   <div class="wrap" style="padding:8px 0;">
+    <button class="sound-toggle" onclick="toggleMute()">🔇 Sound off</button>
     <h1>BeeRelax</h1>
     <p><strong>Totale ontspanning, herstel en revitalisatie in een innovatief wellnessconcept.</strong></p>
     <br>
@@ -765,6 +763,7 @@ function onYouTubeIframeAPIReady() {}
 </body>
  <footer>© BeeRelax — Ontspan. Herstel. ReVibe.</footer>
 </html>
+
 
 
 
